@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reader Platform - AsuX AI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body class="index-page" oncontextmenu="return false;">
+
+    <div class="sidebar">
+        <h2>Contents</h2>
+        <div id="chapters-container" class="chapters-list">
+            <div style="color: var(--text-muted); text-align: center;">Loading chapters...</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="profile-container">
+            <div class="profile-icon" title="View Profile" onclick="toggleProfile()">P</div>
+            <div class="profile-menu-card" id="menu-card">
+                <div class="user-info">👤 Student</div>
+                <hr>
+                <button class="logout-btn" id="logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <div class="pdf-controls">
+                <div class="control-group">
+                    <button id="zoom-out">- Zoom Out</button>
+                    <button id="zoom-in">+ Zoom In</button>
+                </div>
+            </div>
+            <div class="canvas-container" id="pdf-container">
+                </div>
+        </div>
+
+        <div class="feedback-section minimized" id="feedback-panel">
+            <div class="feedback-header" onclick="toggleFeedback()">
+                <h3>📝 Chapter Feedback</h3>
+                <button class="toggle-btn">▼</button>
+            </div>
+            <div class="feedback-content">
+                <div class="qa-group">
+                    <label>Q1: আপনার মূল্যবান মতামত জানান? </label>
+                    <textarea id="note-q1" placeholder="এখানে আপনার মতামত লিখুন..."></textarea>
+                </div>
+                <div class="qa-group">
+                    <label>Q2: কোনো mathematical concept, explanation বা code block বুঝতে অসুবিধা হয়েছে কি?</label>
+                    <textarea id="note-q2" placeholder="যে অংশটি বুঝতে সমস্যা হয়েছে তা লিখুন..."></textarea>
+                </div>
+                <div class="qa-group">
+                    <label>Q3: কোনো formatting সমস্যা, typo, বা UI/UX সমস্যা চোখে পড়েছে কি?</label>
+                    <textarea id="note-q3" placeholder="UI বা rendering সমস্যাগুলো এখানে জানান..."></textarea>
+                </div>
+                <button class="submit-btn" id="submit-feedback-btn" onclick="submitFeedback()">
+                    <span id="btn-text">ফিডব্যাক পাঠান</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

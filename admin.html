@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Admin Dashboard - AsuX AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-page">
+
+    <div id="admin-login-overlay">
+        <div class="auth-card">
+            <div class="brand">Pervez Hasan<span>Admin</span></div>
+            <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input type="email" id="admin-email-input" required placeholder="admin@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="admin-password-input" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-primary" id="admin-login-btn" style="width: 100%; padding: 1rem; margin-top: 1rem; font-size: 1.1rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal)); border: none; border-radius: 8px;">Authenticate</button>
+                <div id="admin-error-msg" class="error-text"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="brand">Pervez Hasan<span>Admin</span></div>
+        <div class="nav-item active" onclick="switchTab('dashboard', this)">📊 Dashboard Overview</div>
+        <div class="nav-item" onclick="switchTab('upload', this)">📤 Upload Chapter</div>
+        <div style="margin-top: auto;">
+            <div class="nav-item" style="color: var(--danger);" onclick="handleLogout()">🚪 Logout</div>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="top-header">
+            <div class="header-title" id="current-tab-title">Dashboard Overview</div>
+            <div class="admin-profile">
+                <span id="admin-email">Admin Portal</span>
+                <div class="admin-avatar">A</div>
+            </div>
+        </div>
+
+        <div id="view-dashboard" class="view-section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Total Readers</div>
+                    <div class="stat-value" id="stat-users">--</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Total Chapters</div>
+                    <div class="stat-value" id="stat-chapters">--</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Total Feedback</div>
+                    <div class="stat-value" id="stat-feedback">--</div>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Recent Chapter Feedback</h3>
+                    <button class="btn-primary" onclick="refreshData()">↻ Refresh Data</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Chapter</th>
+                            <th>Key Takeaways</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedback-table-body">
+                        <tr><td colspan="6" style="text-align: center;">Loading data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="view-upload" class="view-section">
+            <div class="table-container" style="max-width: 700px; border-color: var(--accent-teal);">
+                <div class="table-header"><h3>Upload New Chapter</h3></div>
+                <form id="upload-chapter-form" onsubmit="handleChapterUpload(event)">
+                    <div class="form-group">
+                        <label>Chapter Number</label>
+                        <input type="number" id="chap-number" required placeholder="e.g., 6">
+                    </div>
+                    <div class="form-group">
+                        <label>Chapter Title</label>
+                        <input type="text" id="chap-title" required placeholder="e.g., Advanced Neural Networks">
+                    </div>
+                    <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+                        <h4 style="color: var(--accent-blue);">📄 Click to select PDF file</h4>
+                        <p id="file-name-display">No file selected</p>
+                        <input type="file" id="file-input" accept="application/pdf" required onchange="updateFileName(this)">
+                    </div>
+                    <button type="submit" class="btn-primary" id="upload-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem;">🚀 Upload & Publish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="feedback-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Feedback Review: <span id="modal-username-title" style="color: white;">User</span></h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-feedback-content"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

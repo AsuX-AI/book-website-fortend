@@ -1,0 +1,198 @@
+/* ==========================================
+   GLOBAL VARIABLES & RESETS
+   ========================================== */
+:root {
+    --bg-main: #0f172a;
+    --bg-panel: #1e293b;
+    --bg-panel-light: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
+    --accent-blue: #0ea5e9;
+    --accent-teal: #14b8a6;
+    --border-color: #334155;
+    --danger: #ef4444;
+    --danger-red: #ef4444;
+    --success: #10b981;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-panel); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--bg-panel-light); }
+
+
+/* ==========================================
+   1. INDEX (READER) PAGE STYLES
+   ========================================== */
+body.index-page {
+    height: 100vh;
+    display: flex;
+    padding: 1rem;
+    gap: 1.5rem;
+    overflow: hidden;
+    user-select: none;
+}
+.index-page .sidebar { width: 260px; background: var(--bg-panel); border-radius: 16px; border: 1px solid var(--border-color); padding: 1.5rem 1rem; display: flex; flex-direction: column; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); z-index: 5; }
+.index-page .sidebar h2 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--accent-teal); text-transform: uppercase; letter-spacing: 1px; text-align: center; }
+.index-page .chapters-list { display: flex; flex-direction: column; overflow-y: auto; }
+.index-page .chapter-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.8rem 1rem; margin-bottom: 0.8rem; border-radius: 8px; cursor: pointer; text-align: left; transition: all 0.2s ease; font-weight: 500; }
+.index-page .chapter-btn:hover { border-color: var(--accent-blue); color: var(--text-main); background: rgba(14, 165, 233, 0.1); }
+.index-page .chapter-btn.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+.index-page .main-content { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; position: relative; }
+.index-page .profile-container { position: absolute; top: 0; right: 0; z-index: 20; display: flex; flex-direction: column; align-items: flex-end; }
+.index-page .profile-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; color: white; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: transform 0.2s; }
+.index-page .profile-icon:hover { transform: scale(1.05); }
+.index-page .profile-menu-card { display: none; margin-top: 10px; background: var(--bg-panel); border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6); color: var(--text-main); min-width: 180px; animation: fadeIn 0.2s ease-in-out; }
+.index-page .profile-menu-card.show { display: block; }
+.index-page .profile-menu-card .user-info { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--accent-teal); display: flex; align-items: center; gap: 8px; }
+.index-page .profile-menu-card hr { border: none; border-top: 1px solid var(--border-color); margin: 0.8rem 0; }
+.index-page .logout-btn { width: 100%; background: var(--bg-main); color: var(--danger-red); border: 1px solid var(--danger-red); padding: 0.6rem; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+.index-page .logout-btn:hover { background: var(--danger-red); color: white; }
+.index-page .pdf-section { flex: 1; background: var(--bg-panel); border-radius: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); margin-top: 25px; transition: flex 0.3s ease; }
+.index-page .pdf-controls { background: var(--bg-panel-light); padding: 0.75rem 1rem; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid var(--border-color); z-index: 10; }
+.index-page .control-group button { background: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; margin: 0 0.4rem; font-weight: 500; transition: border-color 0.2s; }
+.index-page .control-group button:hover { border-color: var(--accent-teal); }
+.index-page .canvas-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem; background: #000; gap: 20px; }
+.index-page canvas { border-radius: 4px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); max-width: 100%; }
+.index-page .feedback-section { height: 320px; background: var(--bg-panel); border-radius: 16px; border: 1px solid var(--border-color); display: flex; flex-direction: column; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
+.index-page .feedback-section.minimized { height: 56px; }
+.index-page .feedback-header { padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-panel-light); cursor: pointer; user-select: none; border-bottom: 1px solid var(--border-color); }
+.index-page .feedback-header h3 { font-size: 1.1rem; color: var(--accent-teal); margin: 0; }
+.index-page .toggle-btn { background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: transform 0.3s; }
+.index-page .feedback-section.minimized .toggle-btn { transform: rotate(180deg); }
+.index-page .feedback-content { padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.2rem; }
+.index-page .qa-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.index-page .qa-group label { color: var(--accent-blue); font-weight: 500; font-size: 0.95rem; }
+.index-page textarea { background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.8rem; color: var(--text-main); resize: vertical; min-height: 60px; outline: none; font-size: 0.9rem; }
+.index-page textarea:focus { border-color: var(--accent-teal); }
+.index-page .submit-btn { align-self: flex-start; background: var(--accent-teal); color: #000; border: none; padding: 0.8rem 2rem; border-radius: 8px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; margin-top: 0.5rem; display: flex; gap: 10px; align-items: center; }
+.index-page .submit-btn:hover { opacity: 0.8; }
+.index-page .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media print {
+    .index-page .sidebar, .index-page .main-content { display: none !important; }
+    body.index-page { background-color: white !important; background-image: none !important; }
+    body.index-page::before { content: "Printing and saving this document is prohibited."; display: block !important; position: absolute; top: 50px; left: 0; width: 100%; text-align: center; font-size: 24px; font-weight: bold; color: black !important; }
+}
+
+@media (max-width: 768px) {
+    body.index-page { flex-direction: column; padding: 0.5rem; gap: 0.8rem; }
+    .index-page .sidebar { width: 100%; height: auto; flex-direction: row; padding: 0.6rem; border-radius: 12px; flex-shrink: 0; }
+    .index-page .sidebar h2 { display: none; }
+    .index-page .chapters-list { flex-direction: row; width: 100%; overflow-x: auto; overflow-y: hidden; padding-bottom: 2px; }
+    .index-page .chapter-btn { margin-bottom: 0; margin-right: 0.5rem; padding: 0.6rem 1rem; font-size: 0.9rem; white-space: nowrap; flex-shrink: 0; }
+    .index-page .main-content { gap: 0.8rem; }
+    .index-page .pdf-section { margin-top: 45px; border-radius: 12px; }
+    .index-page .profile-container { right: 0; top: 0; z-index: 50; }
+    .index-page .profile-icon { width: 36px; height: 36px; font-size: 1rem; }
+    .index-page .feedback-section { border-radius: 12px; height: 380px; }
+    .index-page .feedback-section.minimized { height: 52px; }
+    .index-page .feedback-header h3 { font-size: 1rem; }
+    .index-page .canvas-container { padding: 1rem 0.5rem; }
+    .index-page .chapters-list::-webkit-scrollbar { height: 4px; }
+    .index-page .chapters-list::-webkit-scrollbar-thumb { background: var(--accent-blue); }
+}
+
+
+/* ==========================================
+   2. AUTH PAGE STYLES
+   ========================================== */
+body.auth-page {
+    display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden;
+    background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.1), transparent 40%), radial-gradient(circle at bottom left, rgba(20, 184, 166, 0.1), transparent 40%);
+}
+.auth-page .auth-card { background: var(--bg-panel); width: 100%; max-width: 420px; padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden; }
+.auth-page .auth-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal)); }
+.auth-page .brand { text-align: center; font-size: 2rem; font-weight: bold; margin-bottom: 2rem; letter-spacing: 1px; }
+.auth-page .brand span { color: var(--accent-teal); }
+.auth-page .tab-container { display: flex; background: var(--bg-main); border-radius: 8px; padding: 4px; margin-bottom: 2rem; border: 1px solid var(--border-color); }
+.auth-page .tab-btn { flex: 1; padding: 0.6rem; text-align: center; background: transparent; border: none; color: var(--text-muted); font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; }
+.auth-page .tab-btn.active { background: var(--bg-panel); color: var(--text-main); box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
+.auth-page .form-section { display: none; animation: fadeIn 0.3s ease; }
+.auth-page .form-section.active { display: block; }
+.auth-page .form-group { margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.auth-page .form-group label { font-size: 0.9rem; color: var(--accent-blue); font-weight: 500; }
+.auth-page .form-group input { background: var(--bg-main); border: 1px solid var(--border-color); padding: 0.9rem; border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none; transition: border-color 0.2s; }
+.auth-page .form-group input:focus { border-color: var(--accent-teal); box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.1); }
+.auth-page .submit-btn { width: 100%; background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal)); color: white; border: none; padding: 1rem; border-radius: 8px; font-size: 1.05rem; font-weight: bold; cursor: pointer; margin-top: 1rem; transition: opacity 0.2s, transform 0.1s; }
+.auth-page .submit-btn:hover { opacity: 0.9; }
+.auth-page .submit-btn:active { transform: scale(0.98); }
+.auth-page .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.auth-page .message-box { margin-top: 1rem; padding: 0.8rem; border-radius: 6px; font-size: 0.9rem; text-align: center; display: none; }
+.auth-page .message-box.error { display: block; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
+.auth-page .message-box.success { display: block; background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
+
+
+/* ==========================================
+   3. ADMIN PAGE STYLES
+   ========================================== */
+body.admin-page { display: flex; height: 100vh; overflow: hidden; }
+.admin-page #admin-login-overlay { position: fixed; inset: 0; background-color: var(--bg-main); z-index: 9999; display: flex; align-items: center; justify-content: center; background-image: radial-gradient(circle at top right, rgba(14, 165, 233, 0.1), transparent 40%), radial-gradient(circle at bottom left, rgba(20, 184, 166, 0.1), transparent 40%); }
+.admin-page .auth-card { background: var(--bg-panel); width: 100%; max-width: 400px; padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; }
+.admin-page .auth-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal)); }
+.admin-page .error-text { color: var(--danger); background: rgba(239, 68, 68, 0.1); padding: 0.8rem; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.2); font-size: 0.9rem; margin-top: 1rem; text-align: center; display: none; }
+.admin-page .sidebar { width: 260px; background: var(--bg-panel); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; padding: 1.5rem 1rem; z-index: 10; }
+.admin-page .brand { font-size: 1.5rem; font-weight: bold; color: var(--text-main); margin-bottom: 2rem; text-align: center; letter-spacing: 1px; }
+.admin-page .brand span { color: var(--accent-teal); }
+.admin-page .nav-item { padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px; color: var(--text-muted); cursor: pointer; transition: all 0.2s; font-weight: 500; display: flex; align-items: center; gap: 0.8rem; }
+.admin-page .nav-item:hover, .admin-page .nav-item.active { background: rgba(14, 165, 233, 0.1); color: var(--accent-blue); border-left: 4px solid var(--accent-blue); }
+.admin-page .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow-y: auto; position: relative; }
+.admin-page .top-header { height: 70px; background: var(--bg-panel); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; position: sticky; top: 0; z-index: 5; }
+.admin-page .header-title { font-size: 1.2rem; font-weight: 600; }
+.admin-page .admin-profile { display: flex; align-items: center; gap: 1rem; }
+.admin-page .admin-avatar { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.admin-page .view-section { display: none; padding: 2rem; flex-direction: column; gap: 2rem; animation: fadeIn 0.3s ease-out; }
+.admin-page .view-section.active { display: flex; }
+.admin-page .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+.admin-page .stat-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); display: flex; flex-direction: column; gap: 0.5rem; }
+.admin-page .stat-title { color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.admin-page .stat-value { font-size: 2rem; font-weight: bold; color: var(--text-main); }
+.admin-page .table-container { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+.admin-page .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.admin-page .table-header h3 { color: var(--accent-teal); font-size: 1.2rem; }
+.admin-page .btn-primary { background: var(--accent-blue); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: 500; transition: opacity 0.2s; }
+.admin-page .btn-primary:hover { opacity: 0.8; }
+.admin-page .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.admin-page table { width: 100%; border-collapse: collapse; text-align: left; }
+.admin-page th { padding: 1rem; color: var(--text-muted); border-bottom: 2px solid var(--border-color); font-weight: 600; }
+.admin-page td { padding: 1rem; border-bottom: 1px solid var(--border-color); color: var(--text-main); }
+.admin-page tr:hover td { background: rgba(255, 255, 255, 0.02); }
+.admin-page .badge { padding: 0.3rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+.admin-page .badge-pending { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+.admin-page .action-btn { background: none; border: none; color: var(--accent-blue); cursor: pointer; margin-right: 0.5rem; font-weight: 500; }
+.admin-page .action-btn:hover { text-decoration: underline; }
+.admin-page .upload-zone { border: 2px dashed var(--border-color); border-radius: 12px; padding: 2rem; text-align: center; background: var(--bg-main); transition: border-color 0.2s; cursor: pointer; margin-bottom: 1.5rem; }
+.admin-page .upload-zone:hover { border-color: var(--accent-teal); background: rgba(20, 184, 166, 0.05); }
+.admin-page .upload-zone p { color: var(--text-muted); margin-top: 0.5rem; }
+.admin-page .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.admin-page .form-group label { color: var(--accent-blue); font-size: 0.9rem; font-weight: 500; }
+.admin-page .form-group input { background: var(--bg-main); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px; color: white; outline: none; }
+.admin-page .form-group input:focus { border-color: var(--accent-teal); }
+.admin-page #file-input { display: none; }
+.admin-page .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 50; align-items: center; justify-content: center; padding: 1rem; }
+.admin-page .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease-out; }
+.admin-page .modal-card { background: var(--bg-panel); border: 1px solid var(--accent-teal); border-radius: 12px; width: 100%; max-width: 600px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+.admin-page .modal-header { padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.admin-page .modal-header h3 { color: var(--accent-teal); font-size: 1.25rem; }
+.admin-page .close-btn { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
+.admin-page .close-btn:hover { color: var(--danger); }
+.admin-page .modal-body { padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.5rem; }
+.admin-page .feedback-item { background: var(--bg-panel-light); border-radius: 8px; padding: 1.2rem; border-left: 4px solid var(--accent-blue); }
+.admin-page .feedback-meta { display: flex; justify-content: space-between; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+.admin-page .feedback-qa { margin-bottom: 1rem; }
+.admin-page .qa-q { font-weight: 600; color: var(--accent-teal); font-size: 0.9rem; margin-bottom: 0.3rem; }
+.admin-page .qa-a { color: var(--text-main); font-size: 0.95rem; line-height: 1.4; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }

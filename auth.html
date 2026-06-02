@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth -Book Review</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-card">
+        <div class="brand">Private<span> Reviewer</span></div>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchTab('login')" id="btn-login">Login</button>
+            <button class="tab-btn" onclick="switchTab('signup')" id="btn-signup">Sign Up</button>
+        </div>
+
+        <div id="system-message" class="message-box"></div>
+
+        <form id="form-login" class="form-section active" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="login-email" required placeholder="name@domain.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="login-password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="submit-btn" id="submit-login">Sign In Access</button>
+        </form>
+
+        <form id="form-signup" class="form-section" onsubmit="handleSignup(event)">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="signup-name" required placeholder="e.g. Pervez Hasan">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="signup-email" required placeholder="name@domain.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="signup-password" required minlength="6" placeholder="Create a strong password">
+            </div>
+            <button type="submit" class="submit-btn" id="submit-signup">Create Account</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
